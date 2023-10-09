@@ -1,0 +1,13 @@
+volumes:
+  data:
+
+services:
+  postgres:
+    image: postgres:latest # образ PostgreSQL
+    environment:
+      - POSTGRES_USER=postgres # имя пользователя системы PostgreSQL
+      - POSTGRES_PASSWORD=postgres # пароль
+    ports:
+      - 8088:5432 # открыть внешний доступ к контейнеру по порту 8088
+    volumes:
+      - data:/var/lib/postgresql

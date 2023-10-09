@@ -1,0 +1,29 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: VTB-service
+
+#  sql:
+#    init:
+#      mode: always
+  datasource:
+    url: jdbc:postgresql://localhost:8088/postgres
+    username: postgres
+    password: postgres
+
+  jpa:
+    database: postgresql
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+#  security:
+#    jwt:
+#      secret: secret
+#      expiration: 86400000 # 24 hours
