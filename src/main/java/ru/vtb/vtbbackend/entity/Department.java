@@ -1,6 +1,7 @@
 package ru.vtb.vtbbackend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +16,7 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @NotEmpty
     @Column(name = "name")
     private String name;
     @ManyToMany(mappedBy = "departments")

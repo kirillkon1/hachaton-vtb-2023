@@ -1,8 +1,7 @@
 package ru.vtb.vtbbackend.entity;
 
 import jakarta.persistence.*;
-//import jakarta.validation.Valid;
-//import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -23,19 +22,19 @@ public class User {
     @Column(name = "user_id")
     private Long id;
     @Column(name = "name")
-//    @NotBlank
+    @NotEmpty
     private String name;
     @Column(name = "surname")
-//    @NotBlank
+    @NotEmpty
     private String surname;
     @Column(name = "phone_number")
-//    @NotBlank
+    @NotEmpty
     private String phoneNumber;
     @Column(name = "email")
-//    @NotBlank
+    @NotEmpty
     private String email;
     @Column(name = "password")
-//    @NotBlank
+    @NotEmpty
     private String password;
     @Column(name = "created_at")
     private LocalDate createdAt;

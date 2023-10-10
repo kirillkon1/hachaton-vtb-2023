@@ -1,6 +1,7 @@
 package ru.vtb.vtbbackend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
 
@@ -13,8 +14,11 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     @Column(name = "name")
     private String name;
+    @OneToOne(mappedBy = "city")
+    private Bank bank;
 
     @Override
     public boolean equals(Object o) {
