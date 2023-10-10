@@ -13,6 +13,8 @@ public class BankDto {
     private Long id;
     private String name;
     private String address;
+    private Double rating;
     private CoordinatesDto coords;
+    private CityDto city;
     private List<DepartmentDto> departments;
 }

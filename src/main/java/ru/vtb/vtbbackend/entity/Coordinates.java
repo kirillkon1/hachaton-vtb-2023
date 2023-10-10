@@ -1,6 +1,7 @@
 package ru.vtb.vtbbackend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
 
@@ -9,8 +10,10 @@ public class Coordinates {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     @Column(name = "y_pos")
     private Double latitude;
+    @NotEmpty
     @Column(name = "x_pos")
     private Double longitude;
     @OneToOne(mappedBy = "coords")

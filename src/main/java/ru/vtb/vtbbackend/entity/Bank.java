@@ -1,6 +1,7 @@
 package ru.vtb.vtbbackend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,13 +15,20 @@ public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     @Column(name = "name")
     private String name;
+    @NotEmpty
     @Column(name = "address")
     private String address;
+    @Column(name = "rating")
+    private Double rating;
     @OneToOne
-    @JoinColumn(name = "coords_id", referencedColumnName = "id")
+    @JoinColumn(name = "coordinates_id", referencedColumnName = "id")
     private Coordinates coords;
+    @OneToOne
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
+    private City city;
     @ManyToMany
     @JoinTable(
             name = "bank_department",

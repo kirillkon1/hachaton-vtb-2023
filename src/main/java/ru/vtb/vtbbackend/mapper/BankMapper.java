@@ -11,7 +11,10 @@ public interface BankMapper {
     @Mapping(source = "id", target = "id")
     @Mapping(source = "address", target = "address")
     @Mapping(source = "name", target = "name")
+    @Mapping(source = "rating", target = "rating")
     @Mapping(expression = "java(CoordMapper.INSTANCE.coordinatesToCoordinatesDto(bank.getCoords()))",
+            target = "coords")
+    @Mapping(expression = "java(CityMapper.INSTANCE.cityToCityDto(bank.getCity()))",
             target = "coords")
     @Mapping(expression = "java(bank.getDepartments()" +
             ".stream.map(DepMapper.INSTANCE::departmentToDepartmentDto).toList())",
