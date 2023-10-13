@@ -19,7 +19,6 @@ public class BankOffice {
     @Column(unique = true)
     private String name;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
