@@ -1,9 +1,8 @@
 package ru.vtb.vtbbackend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -11,17 +10,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class WorkingTime {
+public class OpenHours {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @JsonIgnore
     private Long id;
 
     @Column(name="open_at")
-    private LocalDateTime openAt;
+    private String openAt;
 
     @Column(name="closed_at")
-    private LocalDateTime closedAt;
+    private String closedAt;
 
     @Column(name="day_of_the_week")
     private String dayOfWeek;

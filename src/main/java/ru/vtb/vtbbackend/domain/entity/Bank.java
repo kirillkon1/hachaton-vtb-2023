@@ -3,15 +3,13 @@ package ru.vtb.vtbbackend.domain.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "bank",
-        uniqueConstraints = @UniqueConstraint(
-                columnNames = "address")
-)
+@Table(name = "bank")
 @Getter
 @Setter
 @Builder
@@ -30,18 +28,31 @@ public class Bank {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "rating")
-    private Double rating;
+    @NotEmpty
+    @Column(name = "latitude")
+    private Double latitude;
 
-    @OneToOne
-    @JoinColumn(name = "coordinates_id", referencedColumnName = "id")
-    private Coordinates coords;
+    @NotEmpty
+    @Column(name = "longitude")
+    private Double longitude;
 
-    @ManyToOne
-    @JoinColumn(name = "city_id", referencedColumnName = "id")
-    private City city;
+    @Column
+    private boolean status;
 
-    @ManyToMany
+    @Column(name = "rko")
+    private boolean rko;
+
+    @Column(name = "sale_point_format")
+    private String salePointFormat;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "metro_id")
+    private MetroStation metroStation;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "bank_department",
             joinColumns = @JoinColumn(name = "bank_id", referencedColumnName = "id")

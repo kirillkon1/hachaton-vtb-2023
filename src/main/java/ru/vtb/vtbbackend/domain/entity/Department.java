@@ -19,16 +19,13 @@ public class Department {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "office_id")
-    private BankOffice bankOffice;
+    private ServiceOfBank serviceOfBank;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "department_id", referencedColumnName = "id")
-    private List<WorkingTime> workingTimes;
-
-    @ManyToMany(mappedBy = "departments")
-    private List<Bank> banks;
+    private List<OpenHours> openHours;
 
 
     @Override

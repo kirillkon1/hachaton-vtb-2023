@@ -4,18 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import ru.vtb.vtbbackend.domain.entity.Bank;
-import ru.vtb.vtbbackend.domain.entity.Coordinates;
 import ru.vtb.vtbbackend.domain.entity.Department;
-import ru.vtb.vtbbackend.domain.entity.WorkingTime;
-import ru.vtb.vtbbackend.domain.repository.BankOfficeRepository;
+import ru.vtb.vtbbackend.domain.entity.OpenHours;
+import ru.vtb.vtbbackend.domain.repository.ServiceOfBankRepository;
 import ru.vtb.vtbbackend.domain.repository.BankRepository;
 import ru.vtb.vtbbackend.exceptions.BankNotFoundException;
 import ru.vtb.vtbbackend.web.dto.request.BankFilterDtoRequest;
 import ru.vtb.vtbbackend.web.dto.request.bankRequest.BankDtoRequest;
 import ru.vtb.vtbbackend.web.dto.response.BankDtoResponse;
 
+
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -24,7 +23,7 @@ import java.util.List;
 public class BankService {
 
     private final BankRepository bankRepository;
-    public final BankOfficeRepository officeRepository;
+    public final ServiceOfBankRepository serviceRepository;
 
     public BankDtoResponse getBank(Long id) throws BankNotFoundException {
         var bank = bankRepository.findById(id).orElseThrow(() -> new BankNotFoundException("Bank hasn't been found with id: " + id));
@@ -42,37 +41,41 @@ public class BankService {
 
     public BankDtoResponse create(BankDtoRequest dto) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm");
-
-
         List<Department> newDepartments = dto.getDepartments().stream().map(
                 it -> Department.builder()
-                        .bankOffice(officeRepository.findByName(it.getServiceName()).orElseThrow(
-                                () -> new NotFoundException("Bank office #" + it.getServiceName() + " has been found!")
+                        .serviceOfBank(serviceRepository.findByName(it.getServiceOfBank()).orElseThrow(
+                                () -> new NotFoundException("Bank office #" + it.getServiceOfBank() + " has been found!")
                         ))
-                        .workingTimes(it.getWorkingTimeDtoList().stream().map(it2 ->
-                                        WorkingTime.builder()
-                                                .openAt(LocalDateTime.parse(it2.getOpenAt(), formatter))
-                                                .closedAt(LocalDateTime.parse(it2.getClosedAt(), formatter))
+
+                        .openHours((
+                                it.getOpenHoursList().stream().map(it2 ->
+                                        OpenHours.builder()
+                                                .openAt(it2.getOpenAt())
+                                                .closedAt(it2.getClosedAt())
                                                 .dayOfWeek(it2.getDayOfWeek().toUpperCase())
                                                 .build()
                                 ).toList()
-                        ).build()
+                        ))
+                        .build()
         ).toList();
 
         var bank = Bank
                 .builder()
                 .name(dto.getName())
                 .address(dto.getAddress())
-                .coords(Coordinates.builder().
-                        latitude(dto.getCoords().getLatitude()).
-                        longitude(dto.getCoords().getLongitude())
-                        .build()
-                )
+                .longitude(dto.getLongitude())
+                .latitude(dto.getLatitude())
                 .departments(newDepartments)
                 .build();
 
-        return new BankDtoResponse(bankRepository.save(bank));
 
+
+        var newBank = bankRepository.save(bank);
+        return new BankDtoResponse(newBank);
+
+    }
+
+    private Integer parseTime(String time){
+        return Integer.parseInt(time.replace(":", ""));
     }
 }

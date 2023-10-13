@@ -27,8 +27,8 @@ public class BankController {
         return bankService.getAllBanks();
     }
 
-    @PostMapping()
-    public BankDtoResponse createBank(BankDtoRequest dto){
+    @PostMapping
+    public BankDtoResponse createBank(@RequestBody @Valid BankDtoRequest dto){
         return bankService.create(dto);
     }
 

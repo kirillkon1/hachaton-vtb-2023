@@ -5,8 +5,7 @@ import lombok.Getter;
 
 
 @Getter
-public class WorkingTimeDtoRequest {
-
+public class OpenHoursRequest {
 
     @JsonProperty("open_at")
     private String openAt;

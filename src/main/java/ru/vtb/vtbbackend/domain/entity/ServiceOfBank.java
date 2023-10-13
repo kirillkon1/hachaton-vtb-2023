@@ -1,36 +1,29 @@
 package ru.vtb.vtbbackend.domain.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+
 
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class Coordinates {
+public class ServiceOfBank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotEmpty
-    @Column(name = "y_pos")
-    private Double latitude;
-
-    @NotEmpty
-    @Column(name = "x_pos")
-    private Double longitude;
-
+    @Column(unique = true)
+    private String name;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Coordinates that = (Coordinates) o;
+        ServiceOfBank that = (ServiceOfBank) o;
         return Objects.equals(id, that.id);
     }
 
