@@ -3,6 +3,7 @@ package ru.vtb.vtbbackend.domain.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ru.vtb.vtbbackend.web.dto.response.AtmInnerServicesDtoResponse;
 
 import java.util.Objects;
 
@@ -42,6 +43,18 @@ public class AtmInnerServices {
 
     @OneToOne(mappedBy = "service")
     private Atm atm;
+
+    //delete
+    public AtmInnerServices(AtmInnerServicesDtoResponse dto) {
+        this.wheelchair = dto.getWheelchair();
+        this.blind = dto.getBlind();
+        this.nfcForBankCards = dto.getNfcForBankCards();
+        this.qrRead = dto.getQrRead();
+        this.supportsUsd = dto.getSupportsUsd();
+        this.supportsChargeRub = dto.getSupportsChargeRub();
+        this.supportsEur = dto.getSupportsEur();
+        this.supportsRub = dto.getSupportsRub();
+    }
 
     @Override
     public boolean equals(Object o) {

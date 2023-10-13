@@ -1,10 +1,11 @@
 package ru.vtb.vtbbackend.web.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.vtb.vtbbackend.domain.service.AtmService;
+import ru.vtb.vtbbackend.web.dto.request.AtmDtoRequest;
 import ru.vtb.vtbbackend.web.dto.response.AtmDtoResponse;
 
 import java.util.List;
@@ -18,5 +19,12 @@ public class AtmController {
     @GetMapping()
     List<AtmDtoResponse> getAllAtms(){
         return atmService.getAll();
+    }
+
+    //delete
+    @PostMapping()
+    ResponseEntity<?> uploadAtms(@RequestBody AtmDtoRequest list){
+        atmService.upload(list);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

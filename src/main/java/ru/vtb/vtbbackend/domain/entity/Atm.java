@@ -3,6 +3,8 @@ package ru.vtb.vtbbackend.domain.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ru.vtb.vtbbackend.web.dto.response.AtmDtoResponse;
+import ru.vtb.vtbbackend.web.dto.response.AtmInnerServicesDtoResponse;
 
 import java.util.Objects;
 
@@ -16,7 +18,7 @@ public class Atm {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "address", unique = true)
+    @Column(name = "address")
     private String address;
 
     @Column(name = "latitude")
@@ -27,6 +29,15 @@ public class Atm {
 
     @Column(name = "allDay")
     private Boolean allDay;
+
+    //delete
+    public Atm(AtmDtoResponse atm, AtmInnerServices service) {
+        this.address = atm.getAddress();
+        this.latitude = atm.getLatitude();
+        this.longitude = atm.getLongitude();
+        this.allDay = atm.getAllDay();
+        this.service = service;
+    }
 
     @OneToOne
     @JoinColumn(name = "service_id", referencedColumnName = "id")
