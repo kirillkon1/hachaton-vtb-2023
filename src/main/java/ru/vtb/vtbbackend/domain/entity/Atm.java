@@ -2,6 +2,7 @@ package ru.vtb.vtbbackend.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.vtb.vtbbackend.web.dto.response.AtmDtoResponse;
 import ru.vtb.vtbbackend.web.dto.response.AtmInnerServicesDtoResponse;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Table(name = "atms")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Atm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
