@@ -2,8 +2,11 @@ package ru.vtb.vtbbackend.domain.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vtb.vtbbackend.domain.entity.Atm;
+import ru.vtb.vtbbackend.domain.entity.AtmInnerServices;
 import ru.vtb.vtbbackend.domain.repository.AtmInnerServicesRepository;
 import ru.vtb.vtbbackend.domain.repository.AtmRepository;
+import ru.vtb.vtbbackend.web.dto.request.AtmDtoRequest;
 import ru.vtb.vtbbackend.web.dto.response.AtmDtoResponse;
 
 import java.util.List;
@@ -16,5 +19,14 @@ public class AtmService {
 
     public List<AtmDtoResponse> getAll() {
         return atmRepository.findAll().stream().map(AtmDtoResponse::new).toList();
+    }
+
+    //delete
+    public void upload(AtmDtoRequest list) {
+        List<AtmDtoResponse> list1 = list.getList();
+
+        list1.forEach(a -> atmRepository
+                .save(new Atm(a, servicesRepository.save(new AtmInnerServices(a.getService())))
+                ));
     }
 }
