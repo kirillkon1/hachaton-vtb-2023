@@ -18,12 +18,16 @@ public class AtmService {
     private final AtmRepository atmRepository;
     private final AtmInnerServicesRepository servicesRepository;
 
+    public List<AtmDtoResponse> getAll() {
+        return atmRepository.findAll().stream().map(AtmDtoResponse::new).toList();
+    }
+
     public List<AtmDtoResponse> getAll(Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page - 1, size);
         return atmRepository.findAll(pageRequest)
                 .getContent()
                 .stream()
-                .map(a -> new AtmDtoResponse(a))
+                .map(AtmDtoResponse::new)
                 .toList();
     }
 
