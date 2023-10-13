@@ -17,8 +17,8 @@ public class AtmController {
     private final AtmService atmService;
 
     @GetMapping()
-    List<AtmDtoResponse> getAllAtms(){
-        return atmService.getAll();
+    List<AtmDtoResponse> getAtms(@RequestParam Integer page, @RequestParam Integer size){
+        return atmService.getAll(page, size);
     }
 
     //delete

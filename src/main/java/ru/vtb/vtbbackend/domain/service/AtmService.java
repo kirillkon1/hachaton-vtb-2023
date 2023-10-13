@@ -1,6 +1,7 @@
 package ru.vtb.vtbbackend.domain.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.vtb.vtbbackend.domain.entity.Atm;
 import ru.vtb.vtbbackend.domain.entity.AtmInnerServices;
@@ -17,8 +18,13 @@ public class AtmService {
     private final AtmRepository atmRepository;
     private final AtmInnerServicesRepository servicesRepository;
 
-    public List<AtmDtoResponse> getAll() {
-        return atmRepository.findAll().stream().map(AtmDtoResponse::new).toList();
+    public List<AtmDtoResponse> getAll(Integer page, Integer size) {
+        PageRequest pageRequest = PageRequest.of(page - 1, size);
+        return atmRepository.findAll(pageRequest)
+                .getContent()
+                .stream()
+                .map(a -> new AtmDtoResponse(a))
+                .toList();
     }
 
     //delete
