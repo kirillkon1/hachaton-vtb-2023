@@ -3,28 +3,41 @@ package ru.vtb.vtbbackend.domain.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.Hibernate;
 
 import java.util.Objects;
 
 @Entity
+@Table(name = "atms")
 @Getter
 @Setter
-public class BankOffice {
+public class Atm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(unique = true)
-    private String name;
+    @Column(name = "address", unique = true)
+    private String address;
+
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
+    @Column(name = "allDay")
+    private boolean allDay;
+
+    @OneToOne
+    @JoinColumn(name = "service_id", referencedColumnName = "id")
+    private AtmInnerServices service;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BankOffice that = (BankOffice) o;
-        return Objects.equals(id, that.id);
+        Atm atm = (Atm) o;
+        return Objects.equals(id, atm.id);
     }
 
     @Override
