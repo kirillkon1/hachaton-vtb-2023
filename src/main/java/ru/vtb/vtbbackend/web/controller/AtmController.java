@@ -17,6 +17,10 @@ public class AtmController {
     private final AtmService atmService;
 
     @GetMapping()
+    List<AtmDtoResponse> getAtms(){
+        return atmService.getAll();
+    }
+    @GetMapping(params = {"page", "size"})
     List<AtmDtoResponse> getAtms(@RequestParam Integer page, @RequestParam Integer size){
         return atmService.getAll(page, size);
     }
