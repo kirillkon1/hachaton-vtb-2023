@@ -1,32 +1,35 @@
 package ru.vtb.vtbbackend.domain.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "department",
-        uniqueConstraints = @UniqueConstraint(
-                columnNames = "name")
-)
+@Table(name = "department")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @NotEmpty
-    @Column(name = "name")
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "office_id")
+    private BankOffice bankOffice;
 
-    @ManyToMany(mappedBy = "departments", fetch = FetchType.LAZY)
+    @OneToMany
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private List<WorkingTime> workingTimes;
+
+    @ManyToMany(mappedBy = "departments")
     private List<Bank> banks;
+
 
     @Override
     public boolean equals(Object o) {

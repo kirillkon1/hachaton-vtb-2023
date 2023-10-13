@@ -6,7 +6,7 @@ import ru.vtb.vtbbackend.domain.entity.Department;
 public class DepartmentDtoResponse {
 
     public DepartmentDtoResponse(Department department) {
-        this.name = department.getName();
+        this.name = department.getBankOffice().getName();
     }
 
     @JsonProperty("name")

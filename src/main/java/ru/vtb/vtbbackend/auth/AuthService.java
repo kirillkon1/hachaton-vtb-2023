@@ -1,25 +1,21 @@
 //package ru.vtb.vtbbackend.service;
 //
 //import lombok.RequiredArgsConstructor;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.stereotype.Service;
-//import ru.vtb.vtbbackend.dto.RegisterReq;
+//import ru.vtb.vtbbackend.auth.user.UserService;
 //
 //@Service
 //@RequiredArgsConstructor
 //public class AuthService {
-//    private final UserDetailsService userDetailsService;
 //    private final PasswordEncoder encoder;
 //    private final UserService userService;
 //
 //    public boolean login(String email, String password) {
-//        if (userService.userExists(email).isEmpty()) {
-//            return false;
-//        }
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-//        String encryptedPassword = userDetails.getPassword();
+//
+//        var user = userService.getUser()
+//
+//
 //        return encoder.matches(password, encryptedPassword);
 //    }
 //

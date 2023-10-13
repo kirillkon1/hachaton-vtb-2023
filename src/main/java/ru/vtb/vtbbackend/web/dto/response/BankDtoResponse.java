@@ -19,7 +19,7 @@ public class BankDtoResponse {
     @JsonProperty("coordinate")
     private CoordinatesDtoResponse coords;
     @JsonProperty("city")
-    private CityDtoResponse city;
+    private String city;
     @JsonProperty("departments")
     private List<DepartmentDtoResponse> departments;
 
@@ -30,7 +30,7 @@ public class BankDtoResponse {
         this.address = bank.getAddress();
         this.rating = bank.getRating();
         this.coords = new CoordinatesDtoResponse(bank.getCoords());
-        this.city = new CityDtoResponse(bank.getCity());
+        this.city = bank.getCity().getName();
         this.departments = bank.getDepartments().stream().map(DepartmentDtoResponse::new).toList();
     }
 

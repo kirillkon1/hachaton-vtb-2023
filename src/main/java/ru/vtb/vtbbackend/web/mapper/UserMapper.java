@@ -3,7 +3,7 @@ package ru.vtb.vtbbackend.web.mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import ru.vtb.vtbbackend.web.dto.request.RegisterRequest;
-import ru.vtb.vtbbackend.domain.entity.User;
+import ru.vtb.vtbbackend.auth.user.User;
 
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);

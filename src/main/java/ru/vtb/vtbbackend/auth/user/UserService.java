@@ -1,10 +1,10 @@
-package ru.vtb.vtbbackend.domain.service;
+package ru.vtb.vtbbackend.auth.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.vtb.vtbbackend.domain.entity.User;
-import ru.vtb.vtbbackend.domain.repository.UserRepository;
+import ru.vtb.vtbbackend.exceptions.UserNotFoundException;
 import ru.vtb.vtbbackend.web.dto.request.RegisterRequest;
+import ru.vtb.vtbbackend.web.dto.response.UserDtoResponse;
 import ru.vtb.vtbbackend.web.mapper.UserDto;
 import ru.vtb.vtbbackend.web.mapper.UserMapper;
 
@@ -15,9 +15,12 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
-    public UserDto getUser(long id) {
-        return UserMapper.INSTANCE.userToUserDto(userRepository.findById(id)
-                .orElse(null));
+    public UserDtoResponse getUser(Long id) throws UserNotFoundException {
+
+        var user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with id #" + id + " has not found!"));
+
+        return new UserDtoResponse(user);
     }
 
     public void createUser(RegisterRequest request) {

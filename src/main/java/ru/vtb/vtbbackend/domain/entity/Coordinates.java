@@ -2,14 +2,16 @@ package ru.vtb.vtbbackend.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Coordinates {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

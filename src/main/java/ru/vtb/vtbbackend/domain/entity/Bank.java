@@ -2,8 +2,7 @@ package ru.vtb.vtbbackend.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +14,9 @@ import java.util.Objects;
 )
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

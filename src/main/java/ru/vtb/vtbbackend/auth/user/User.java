@@ -1,4 +1,4 @@
-package ru.vtb.vtbbackend.domain.entity;
+package ru.vtb.vtbbackend.auth.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -22,7 +22,7 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "name")

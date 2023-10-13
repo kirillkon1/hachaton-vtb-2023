@@ -6,4 +6,7 @@ import ru.vtb.vtbbackend.domain.entity.Bank;
 
 @Repository
 public interface BankRepository extends JpaRepository<Bank, Long> {
+
+//    public Page<Bank>
+
 }
