@@ -35,7 +35,7 @@ public class AtmService {
     public void upload(AtmDtoRequest list) {
         List<AtmDtoResponse> list1 = list.getList();
 
-        list1.forEach(a -> atmRepository
+        list1.stream().distinct().forEach(a -> atmRepository
                 .save(new Atm(a, servicesRepository.save(new AtmInnerServices(a.getService())))
                 ));
     }

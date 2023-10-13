@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import ru.vtb.vtbbackend.domain.entity.AtmInnerServices;
 
+import java.util.Objects;
+
 @Data
 public class AtmInnerServicesDtoResponse {
     @JsonProperty("wheelchair")
@@ -46,5 +48,18 @@ public class AtmInnerServicesDtoResponse {
         this.supportsChargeRub = services.getSupportsChargeRub();
         this.supportsEur = services.getSupportsEur();
         this.supportsRub = services.getSupportsRub();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AtmInnerServicesDtoResponse that = (AtmInnerServicesDtoResponse) o;
+        return Objects.equals(wheelchair, that.wheelchair) && Objects.equals(blind, that.blind) && Objects.equals(nfcForBankCards, that.nfcForBankCards) && Objects.equals(qrRead, that.qrRead) && Objects.equals(supportsUsd, that.supportsUsd) && Objects.equals(supportsChargeRub, that.supportsChargeRub) && Objects.equals(supportsEur, that.supportsEur) && Objects.equals(supportsRub, that.supportsRub);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(wheelchair, blind, nfcForBankCards, qrRead, supportsUsd, supportsChargeRub, supportsEur, supportsRub);
     }
 }
