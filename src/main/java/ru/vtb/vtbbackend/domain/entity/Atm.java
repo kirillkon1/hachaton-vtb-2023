@@ -26,7 +26,7 @@ public class Atm {
     private Double longitude;
 
     @Column(name = "allDay")
-    private boolean allDay;
+    private Boolean allDay;
 
     @OneToOne
     @JoinColumn(name = "service_id", referencedColumnName = "id")

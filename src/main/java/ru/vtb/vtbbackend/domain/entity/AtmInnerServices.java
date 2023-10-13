@@ -16,33 +16,29 @@ public class AtmInnerServices {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    /*
-        AVAILABLE - true, UNAVAILABLE - false, UNKNOWN - null
-        или поменять на String
-     */
     @Column(name = "wheelchair")
-    private Boolean wheelchair;
+    private String wheelchair;
 
     @Column(name = "blind")
-    private Boolean blind;
+    private String blind;
 
     @Column(name = "nfcFor_bank_cards")
-    private Boolean nfcForBankCards;
+    private String nfcForBankCards;
 
     @Column(name = "qr_read")
-    private Boolean qrRead;
+    private String qrRead;
 
     @Column(name = "supports_usd")
-    private Boolean supportsUsd;
+    private String supportsUsd;
 
     @Column(name = "supports_charge_rub")
-    private Boolean supportsChargeRub;
+    private String supportsChargeRub;
 
     @Column(name = "supports_eur")
-    private Boolean supportsEur;
+    private String supportsEur;
 
     @Column(name = "supports_rub")
-    private Boolean supportsRub;
+    private String supportsRub;
 
     @OneToOne(mappedBy = "service")
     private Atm atm;
