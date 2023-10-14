@@ -38,7 +38,7 @@ public class AtmController {
     }
 
 
-    @Operation(summary = "Получить AtmDtoPageableDto", tags = "Atm",
+    @Operation(summary = "Получить AtmDtoPageableResponse", tags = "Atm",
             description = "получение списка ближайших банкоматов с пагинацией")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK",
