@@ -12,9 +12,8 @@ import ru.vtb.vtbbackend.domain.repository.AtmRepository;
 import ru.vtb.vtbbackend.web.dto.request.AtmDtoRequest;
 import ru.vtb.vtbbackend.web.dto.request.AtmFilterDtoRequest;
 import ru.vtb.vtbbackend.web.dto.request.AtmInnerServicesDtoRequest;
-import ru.vtb.vtbbackend.web.dto.response.AtmDtoPageableDto;
+import ru.vtb.vtbbackend.web.dto.response.AtmDtoPageableResponse;
 import ru.vtb.vtbbackend.web.dto.response.AtmDtoResponse;
-import ru.vtb.vtbbackend.web.dto.response.AtmInnerServicesDtoResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +28,14 @@ public class AtmService {
         return atmRepository.findAll().stream().map(AtmDtoResponse::new).toList();
     }
 
-    public AtmDtoPageableDto getAll(Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page - 1, size);
+    public AtmDtoPageableResponse getAll(Integer page, Integer size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
         Page<Atm> atms = atmRepository.findAll(pageRequest);
         List<AtmDtoResponse> list = atms.getContent()
                 .stream()
                 .map(AtmDtoResponse::new)
                 .toList();
-        return AtmDtoPageableDto.builder()
+        return AtmDtoPageableResponse.builder()
                 .atms(list)
                 .page(Long.valueOf(page))
                 .pageSize(Long.valueOf(size))
@@ -52,7 +51,7 @@ public class AtmService {
                 ));
     }
 
-    public AtmDtoPageableDto getFiltered(AtmFilterDtoRequest request) {
+    public AtmDtoPageableResponse getFiltered(AtmFilterDtoRequest request) {
         Pageable pageable = PageRequest.of(request.getPage() - 1, request.getSize());
         Page<Atm> pageAtms = atmRepository.findNearestAtms(request.getUserLatitude(),request.getUserLongitude(), pageable);
 
@@ -61,7 +60,7 @@ public class AtmService {
                 .map(AtmDtoResponse::new)
                 .toList();
 
-        return AtmDtoPageableDto.builder()
+        return AtmDtoPageableResponse.builder()
                 .atms(list)
                 .page(Long.valueOf(request.getPage()))
                 .pageSize(Long.valueOf(request.getSize()))

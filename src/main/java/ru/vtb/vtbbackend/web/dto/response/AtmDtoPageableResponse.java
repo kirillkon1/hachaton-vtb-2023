@@ -8,7 +8,7 @@ import java.util.List;
 
 @Builder
 @Data
-public class AtmDtoPageableDto {
+public class AtmDtoPageableResponse {
     private List<AtmDtoResponse> atms;
 
     @JsonProperty("page")

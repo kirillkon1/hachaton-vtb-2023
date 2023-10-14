@@ -27,10 +27,7 @@ public class BankLoadService {
             throw new CustomNotFoundException("Bank with id#" + dto.getBankId() + " not found!");
         }
 
-        BankLoad load = new BankLoad();
-        load.setBank(bank);
-        load.setLoad(dto.getLoad());
-        load.setDateTime(dto.getTime());
+        BankLoad load = new BankLoad(dto.getLoad(),dto.getTime(), bank);
 
         return loadRepository.save(load);
     }
