@@ -3,7 +3,6 @@ package ru.vtb.vtbbackend.domain.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vtb.vtbbackend.domain.entity.Bank;
 import ru.vtb.vtbbackend.domain.entity.Department;
@@ -57,7 +56,7 @@ public class BankService {
 
 
     public BankDtoPageableDto filter(BankFilterDtoRequest filterDto) {
-        Pageable pageable = PageRequest.of(filterDto.getPage(), filterDto.getSize());
+        Pageable pageable = PageRequest.of(filterDto.getPage() - 1, filterDto.getSize());
 
         var banks = bankRepository.findNearestBanks(filterDto.getUserX(), filterDto.getUserY(), pageable);
         var bankDtos = banks.stream().map(BankDtoResponse::new).toList();

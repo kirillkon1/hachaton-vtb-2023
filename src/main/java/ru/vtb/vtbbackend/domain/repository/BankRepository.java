@@ -12,7 +12,9 @@ import ru.vtb.vtbbackend.domain.entity.Bank;
 public interface BankRepository extends JpaRepository<Bank, Long> {
 
 
-    @Query(value = "SELECT b FROM Bank b ORDER BY SQRT(POWER(b.longitude - :userLongitude, 2) + POWER(b.latitude - :userLatitude, 2))")
+    @Query(value = "SELECT b FROM Bank b" +
+            " ORDER BY SQRT(POWER(b.longitude - :userLongitude, 2) + POWER(b.latitude - :userLatitude, 2))",
+            nativeQuery = true)
     Page<Bank> findNearestBanks(
             @Param("userLatitude") double userLatitude,
             @Param("userLongitude") double userLongitude,
