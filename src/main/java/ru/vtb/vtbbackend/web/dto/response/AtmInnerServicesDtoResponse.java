@@ -1,12 +1,16 @@
 package ru.vtb.vtbbackend.web.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.vtb.vtbbackend.domain.entity.AtmInnerServices;
 
 import java.util.Objects;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AtmInnerServicesDtoResponse {
     @JsonProperty("wheelchair")
     private String wheelchair;
@@ -24,20 +28,6 @@ public class AtmInnerServicesDtoResponse {
     private String supportsEur;
     @JsonProperty("supportsRub")
     private String supportsRub;
-
-    public AtmInnerServicesDtoResponse() {
-    }
-
-    public AtmInnerServicesDtoResponse(String wheelchair, String blind, String nfcForBankCards, String qrRead, String supportsUsd, String supportsChargeRub, String supportsEur, String supportsRub) {
-        this.wheelchair = wheelchair;
-        this.blind = blind;
-        this.nfcForBankCards = nfcForBankCards;
-        this.qrRead = qrRead;
-        this.supportsUsd = supportsUsd;
-        this.supportsChargeRub = supportsChargeRub;
-        this.supportsEur = supportsEur;
-        this.supportsRub = supportsRub;
-    }
 
     public AtmInnerServicesDtoResponse(AtmInnerServices services) {
         this.wheelchair = services.getWheelchair();

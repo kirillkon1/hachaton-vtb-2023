@@ -1,10 +1,12 @@
 package ru.vtb.vtbbackend.web.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.vtb.vtbbackend.web.dto.response.AtmInnerServicesDtoResponse;
 
 @Data
 @AllArgsConstructor
@@ -23,5 +25,7 @@ public class AtmFilterDtoRequest {
     @JsonProperty("size")
     @NotNull
     private Integer size;
-
+    @JsonProperty("services")
+    @NotNull
+    private AtmInnerServicesDtoResponse services;
 }
