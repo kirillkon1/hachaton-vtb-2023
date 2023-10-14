@@ -31,6 +31,7 @@ public class BankDtoResponse {
 
     private String status;
     private String rko;
+    @JsonProperty("has_ramp")
     private boolean hasRamp;
 
     @JsonProperty("sale_point_format")

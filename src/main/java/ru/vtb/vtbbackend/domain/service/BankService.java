@@ -3,10 +3,12 @@ package ru.vtb.vtbbackend.domain.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.vtb.vtbbackend.domain.entity.Bank;
 import ru.vtb.vtbbackend.domain.entity.Department;
 import ru.vtb.vtbbackend.domain.entity.OpenHours;
+import ru.vtb.vtbbackend.domain.repository.BankLoadRepository;
 import ru.vtb.vtbbackend.domain.repository.ServiceOfBankRepository;
 import ru.vtb.vtbbackend.domain.repository.BankRepository;
 import ru.vtb.vtbbackend.exceptions.BankNotFoundException;
@@ -15,9 +17,9 @@ import ru.vtb.vtbbackend.web.dto.request.BankFilterDtoRequest;
 import ru.vtb.vtbbackend.web.dto.request.bankRequest.BankDtoRequest;
 import ru.vtb.vtbbackend.web.dto.response.BankDtoPageable;
 import ru.vtb.vtbbackend.web.dto.response.BankDtoResponse;
+import ru.vtb.vtbbackend.web.dto.response.BankLoadPageableDtoResponse;
 
 
-import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -25,7 +27,8 @@ import java.util.List;
 public class BankService {
 
     private final BankRepository bankRepository;
-    public final ServiceOfBankRepository serviceRepository;
+    private final ServiceOfBankRepository serviceRepository;
+    private final BankLoadRepository loadRepository;
 
     public BankDtoResponse getBank(Long id) throws BankNotFoundException {
         var bank = bankRepository.findById(id).orElseThrow(() -> new BankNotFoundException("Bank hasn't been found with id: " + id));
@@ -74,7 +77,23 @@ public class BankService {
 
     }
 
-    public BankDtoResponse create(BankDtoRequest dto){
+    public BankLoadPageableDtoResponse getBankLoad(Long bankId, Integer page, Integer size) throws CustomNotFoundException {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("date_time"));
+        var bank = bankRepository.findById(bankId).orElseThrow(
+                () -> new CustomNotFoundException("Bank with id #" + bankId + "hasn't been found!"));
+        var loads = loadRepository.findPageLoadByBandId(bankId, pageable);
+
+        return BankLoadPageableDtoResponse.builder()
+                .loads(loads.toList())
+                .bank(new BankDtoResponse(bank))
+                .page(Long.valueOf(page))
+                .pageSize(Long.valueOf(size))
+                .total(loads.getTotalElements())
+                .totalPages((long) loads.getTotalPages())
+                .build();
+    }
+
+    public BankDtoResponse create(BankDtoRequest dto) {
 
         List<Department> newDepartments = dto.getDepartments().stream().map(
                 it -> {
@@ -113,13 +132,12 @@ public class BankService {
                 .build();
 
 
-
         var newBank = bankRepository.save(bank);
         return new BankDtoResponse(newBank);
 
     }
 
-    private Integer parseTime(String time){
+    private Integer parseTime(String time) {
         return Integer.parseInt(time.replace(":", ""));
     }
 

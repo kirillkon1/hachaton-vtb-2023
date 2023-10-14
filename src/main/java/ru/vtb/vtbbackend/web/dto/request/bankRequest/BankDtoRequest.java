@@ -51,6 +51,9 @@ public class BankDtoRequest {
     @JsonProperty("sale_point_format")
     private String salePointFormat;
 
+    @Schema(name = "Загрузка банка", description = "Значения от 0.0 до 1.0")
+    private Double load;
+
     private List<DepartmentDtoRequest> departments;
 
     @JsonProperty("json_info")
