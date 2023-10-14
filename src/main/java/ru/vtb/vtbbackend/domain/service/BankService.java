@@ -1,6 +1,7 @@
 package ru.vtb.vtbbackend.domain.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,6 +25,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BankService {
 
     private final BankRepository bankRepository;
@@ -43,7 +45,7 @@ public class BankService {
     public BankDtoPageable getBankByPagination(Integer size, Integer page) {
         Pageable pageable = PageRequest.of(page, size);
 
-        System.out.println(pageable);
+        log.info(pageable.toString());
         var banks = bankRepository.findAll(pageable);
         var bankDtos = banks.stream().map(BankDtoResponse::new).toList();
 
@@ -131,6 +133,7 @@ public class BankService {
                 .departments(newDepartments)
                 .build();
 
+        System.out.println(bank);
 
         var newBank = bankRepository.save(bank);
         return new BankDtoResponse(newBank);

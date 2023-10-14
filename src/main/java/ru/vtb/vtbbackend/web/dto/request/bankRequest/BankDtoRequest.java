@@ -23,11 +23,9 @@ public class BankDtoRequest {
     @Schema(name = "Адрес банка", example = "141506, Тестовая область, г. Тестоград, ул. Проверочная, д. 404")
     private String address;
 
-    @NotNull
     @Schema(name = "Широта", example = "56.11111")
     private Double latitude;
 
-    @NotNull
     @Schema(name = "Долгота", example = "56.11111")
     private Double longitude;
 
