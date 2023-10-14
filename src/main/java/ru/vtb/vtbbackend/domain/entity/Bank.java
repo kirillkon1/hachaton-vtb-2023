@@ -3,7 +3,6 @@ package ru.vtb.vtbbackend.domain.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +14,7 @@ import java.util.Objects;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +28,9 @@ public class Bank {
     @Column(name = "address")
     private String address;
 
-    @NotEmpty
     @Column(name = "latitude")
     private Double latitude;
 
-    @NotEmpty
     @Column(name = "longitude")
     private Double longitude;
 
