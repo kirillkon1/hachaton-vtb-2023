@@ -31,6 +31,7 @@ public class BankDtoResponse {
 
     private String status;
     private String rko;
+    private boolean hasRamp;
 
     @JsonProperty("sale_point_format")
     private String salePointFormat;
@@ -49,6 +50,7 @@ public class BankDtoResponse {
         this.longitude = bank.getLongitude();
         this.latitude = bank.getLatitude();
         this.departments = bank.getDepartments().stream().map(DepartmentDtoResponse::new).toList();
+        this.hasRamp = bank.isHasRamp();
 
         this.status = bank.isStatus() ? "открыта" : "закрыта";
         this.rko = bank.isRko() ? "есть РКО" : "нет РКО";

@@ -45,12 +45,15 @@ public class Bank {
     @Column(name = "sale_point_format")
     private String salePointFormat;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "metro_id")
     private MetroStation metroStation;
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "has_ramp")
+    private boolean hasRamp;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
