@@ -1,4 +1,4 @@
-package ru.vtb.vtbbackend.web;
+package ru.vtb.vtbbackend.web.errorHandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +11,12 @@ import ru.vtb.vtbbackend.exceptions.CustomNotFoundException;
 public class ErrorHandler {
 
     @ExceptionHandler(BankNotFoundException.class)
-    public ResponseEntity<String> handleBankNotFoundException(BankNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<ErrorResponse> handleBankNotFoundException(BankNotFoundException ex) {
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CustomNotFoundException.class)
-    public ResponseEntity<String> handleNotFoundException(CustomNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<ErrorResponse> handleNotFoundException(CustomNotFoundException ex) {
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 }

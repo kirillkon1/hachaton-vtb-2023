@@ -13,10 +13,11 @@ import ru.vtb.vtbbackend.exceptions.BankNotFoundException;
 import ru.vtb.vtbbackend.exceptions.CustomNotFoundException;
 import ru.vtb.vtbbackend.web.dto.request.BankFilterDtoRequest;
 import ru.vtb.vtbbackend.web.dto.request.bankRequest.BankDtoRequest;
-import ru.vtb.vtbbackend.web.dto.response.BankDtoPageableDto;
+import ru.vtb.vtbbackend.web.dto.response.BankDtoPageable;
 import ru.vtb.vtbbackend.web.dto.response.BankDtoResponse;
 
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -36,14 +37,14 @@ public class BankService {
         return bankRepository.findAll().stream().map(BankDtoResponse::new).toList();
     }
 
-    public BankDtoPageableDto getBankByPagination(Integer size, Integer page) {
+    public BankDtoPageable getBankByPagination(Integer size, Integer page) {
         Pageable pageable = PageRequest.of(page, size);
 
         System.out.println(pageable);
         var banks = bankRepository.findAll(pageable);
         var bankDtos = banks.stream().map(BankDtoResponse::new).toList();
 
-        return BankDtoPageableDto.builder()
+        return BankDtoPageable.builder()
                 .banks(bankDtos)
                 .page(Long.valueOf(page))
                 .pageSize(Long.valueOf(size))
@@ -55,19 +56,21 @@ public class BankService {
     }
 
 
-    public BankDtoPageableDto filter(BankFilterDtoRequest filterDto) {
-        Pageable pageable = PageRequest.of(filterDto.getPage() - 1, filterDto.getSize());
+    public BankDtoPageable filter(BankFilterDtoRequest filterDto) {
+        Pageable pageable = PageRequest.of(filterDto.getPage(), filterDto.getSize());
+
 
         var banks = bankRepository.findNearestBanks(filterDto.getUserX(), filterDto.getUserY(), pageable);
         var bankDtos = banks.stream().map(BankDtoResponse::new).toList();
 
-        return BankDtoPageableDto.builder()
+        return BankDtoPageable.builder()
                 .banks(bankDtos)
                 .page(Long.valueOf(filterDto.getPage()))
                 .pageSize(Long.valueOf(filterDto.getSize()))
                 .total(banks.getTotalElements())
                 .totalPages((long) banks.getTotalPages())
                 .build();
+
 
     }
 
