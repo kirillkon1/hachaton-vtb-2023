@@ -9,7 +9,7 @@ import java.util.List;
 
 @Builder
 @Data
-public class BankDtoPageable {
+public class BankDtoPageableResponse {
 
     private List<BankDtoResponse> banks;
 

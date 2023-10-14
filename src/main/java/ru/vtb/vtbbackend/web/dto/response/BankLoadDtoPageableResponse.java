@@ -3,17 +3,17 @@ package ru.vtb.vtbbackend.web.dto.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
-import ru.vtb.vtbbackend.domain.entity.BankLoad;
+
 
 import java.util.List;
 
 @Data
 @Builder
-public class BankLoadPageableDtoResponse {
+public class BankLoadDtoPageableResponse {
 
     BankDtoResponse bank;
 
-    List<BankLoad> loads;
+    List<BankLoadDtoResponse> loads;
 
     @JsonProperty("page")
     private Long page;
@@ -25,4 +25,5 @@ public class BankLoadPageableDtoResponse {
     private Long total;
     @JsonProperty("total_pages")
     private Long totalPages;
+
 }

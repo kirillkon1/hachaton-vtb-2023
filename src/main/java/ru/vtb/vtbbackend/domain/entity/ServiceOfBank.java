@@ -10,6 +10,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@Table(name = "service_of_bank", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class ServiceOfBank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

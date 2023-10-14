@@ -5,12 +5,14 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Setter;
 import ru.vtb.vtbbackend.domain.entity.Bank;
+import ru.vtb.vtbbackend.domain.entity.BankLoad;
 import ru.vtb.vtbbackend.domain.entity.MetroStation;
 
 import java.util.List;
 
-
+@Setter
 public class BankDtoResponse {
 
     @JsonProperty("id")
@@ -42,6 +44,9 @@ public class BankDtoResponse {
 
     @JsonProperty("phone_number")
     private String phoneNumber;
+
+    @JsonProperty("last_load")
+    private BankLoadDtoResponse load;
 
 
     public BankDtoResponse(Bank bank) {

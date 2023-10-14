@@ -9,18 +9,22 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.vtb.vtbbackend.exceptions.BankNotFoundException;
+import ru.vtb.vtbbackend.exceptions.CustomNotFoundException;
+import ru.vtb.vtbbackend.web.dto.response.BankLoadDtoPageableResponse;
 import ru.vtb.vtbbackend.web.errorHandler.ErrorResponse;
 import ru.vtb.vtbbackend.web.dto.request.BankFilterDtoRequest;
 import ru.vtb.vtbbackend.web.dto.request.bankRequest.BankDtoRequest;
-import ru.vtb.vtbbackend.web.dto.response.BankDtoPageable;
+import ru.vtb.vtbbackend.web.dto.response.BankDtoPageableResponse;
 import ru.vtb.vtbbackend.web.dto.response.BankDtoResponse;
 import ru.vtb.vtbbackend.domain.service.BankService;
 
 @RestController
 @RequestMapping("/api/banks")
 @RequiredArgsConstructor
+@Slf4j
 public class BankController {
     private final BankService bankService;
 
@@ -28,12 +32,12 @@ public class BankController {
     @Operation(summary = "Получить BankDtoResponse по Id банка")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK",
-            content = { @Content(mediaType = "application/json", schema =
-            @Schema(implementation = BankDtoResponse.class)) }),
+                    content = {@Content(mediaType = "application/json", schema =
+                    @Schema(implementation = BankDtoResponse.class))}),
 
             @ApiResponse(responseCode = "404", description = "Bank is not found",
                     content = {@Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class)) }
+                    @Schema(implementation = ErrorResponse.class))}
             )
     })
     public BankDtoResponse getBank(
@@ -42,6 +46,17 @@ public class BankController {
     ) throws BankNotFoundException {
         return bankService.getBank(id);
     }
+
+    @GetMapping("/{id}/loads")
+    @Operation(summary = "Получить BankLoadDtoPageableResponse по Id банка")
+    public BankLoadDtoPageableResponse getBankWithLoads(
+            @Parameter(name = "id", description = "Bank id", example = "1") @PathVariable Long id,
+            @RequestParam(defaultValue = "10", name = "size") Integer size,
+            @RequestParam(defaultValue = "0", name = "page") Integer page
+    ) throws CustomNotFoundException {
+        return bankService.getBankLoad(id, page, size);
+    }
+
 
 //    @GetMapping
 //    public List<BankDtoResponse> getAllBanks() {
@@ -54,15 +69,18 @@ public class BankController {
             @ApiResponse(responseCode = "200", description = "Success"),
 
     })
-    public BankDtoPageable getAllBanks(
+    public BankDtoPageableResponse getAllBanks(
             @RequestParam(defaultValue = "10", name = "size") Integer size,
             @RequestParam(defaultValue = "0", name = "page") Integer page) {
+
+
         return bankService.getBankByPagination(size, page);
     }
 
     @Hidden
     @PostMapping
     public BankDtoResponse createBank(@RequestBody @Valid BankDtoRequest dto) {
+        log.info("Creating bank with name#" + dto.getName());
         return bankService.create(dto);
     }
 
@@ -71,7 +89,7 @@ public class BankController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success")
     })
-    public BankDtoPageable filterBanks(@RequestBody BankFilterDtoRequest filterDto) {
+    public BankDtoPageableResponse filterBanks(@RequestBody BankFilterDtoRequest filterDto) {
         return bankService.filter(filterDto);
     }
 
@@ -80,7 +98,7 @@ public class BankController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success")
     })
-    public BankDtoPageable filterBanks2(@RequestBody BankFilterDtoRequest filterDto) {
+    public BankDtoPageableResponse filterBanks2(@RequestBody BankFilterDtoRequest filterDto) {
         return bankService.filter2(filterDto);
     }
 

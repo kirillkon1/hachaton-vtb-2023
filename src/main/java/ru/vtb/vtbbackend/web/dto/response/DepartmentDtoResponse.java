@@ -10,13 +10,13 @@ public class DepartmentDtoResponse {
 
     public DepartmentDtoResponse(Department department) {
         this.name = department.getServiceOfBank().getName();
-        this.openHours = department.getOpenHours();
+        this.openHours = department.getOpenHours().stream().map(OpenHoursDtoResponse::new).toList();
     }
 
     @JsonProperty("name")
     private String name;
 
     @JsonProperty("open_hours")
-    private List<OpenHours> openHours;
+    private List<OpenHoursDtoResponse> openHours;
 
 }
