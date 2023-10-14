@@ -28,4 +28,12 @@ public class BankLoad {
     @JsonIgnore
     private Bank bank;
 
+    public BankLoad() {
+    }
+
+    public BankLoad(Double load, LocalDateTime dateTime, Bank bank) {
+        this.load = load;
+        this.dateTime = dateTime;
+        this.bank = bank;
+    }
 }

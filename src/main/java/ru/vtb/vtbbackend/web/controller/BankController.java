@@ -28,8 +28,8 @@ import ru.vtb.vtbbackend.domain.service.BankService;
 public class BankController {
     private final BankService bankService;
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Получить BankDtoResponse по Id банка")
+    @Operation(summary = "Получить BankDtoResponse по Id банка", tags = "Bank",
+            description = "получение информации о банке по id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK",
                     content = {@Content(mediaType = "application/json", schema =
@@ -40,6 +40,7 @@ public class BankController {
                     @Schema(implementation = ErrorResponse.class))}
             )
     })
+    @GetMapping("/{id}")
     public BankDtoResponse getBank(
             @Parameter(name = "id", description = "Bank id", example = "1")
             @PathVariable Long id
@@ -47,8 +48,20 @@ public class BankController {
         return bankService.getBank(id);
     }
 
+
+    @Operation(summary = "Получить BankLoadDtoPageableResponse по Id банка", tags = "Bank",
+            description = "получение информации о банке по id и его уровня загруженности")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = {@Content(mediaType = "application/json", schema =
+                    @Schema(implementation = BankLoadDtoPageableResponse.class))}),
+
+            @ApiResponse(responseCode = "404", description = "Bank is not found",
+                    content = {@Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))}
+            )
+    })
     @GetMapping("/{id}/loads")
-    @Operation(summary = "Получить BankLoadDtoPageableResponse по Id банка")
     public BankLoadDtoPageableResponse getBankWithLoads(
             @Parameter(name = "id", description = "Bank id", example = "1") @PathVariable Long id,
             @RequestParam(defaultValue = "10", name = "size") Integer size,
@@ -63,12 +76,15 @@ public class BankController {
 //        return bankService.getAllBanks();
 //    }
 
-    @GetMapping
-    @Operation(summary = "Получить BankDtoPageableDto по BankFilterDtoRequest", description = "Поиск ближайших банков по фильтрации")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success"),
 
+    @Operation(summary = "Получить BankDtoPageableResponse", tags = "Bank",
+            description = "получение всех банков с пагинацией")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {@Content(mediaType = "application/json", schema =
+                    @Schema(implementation = BankDtoPageableResponse.class))})
     })
+    @GetMapping()
     public BankDtoPageableResponse getAllBanks(
             @RequestParam(defaultValue = "10", name = "size") Integer size,
             @RequestParam(defaultValue = "0", name = "page") Integer page) {
@@ -84,20 +100,27 @@ public class BankController {
         return bankService.create(dto);
     }
 
-    @PostMapping("/filter")
-    @Operation(summary = "Получить BankDtoPageableDto по BankFilterDtoRequest", description = "Поиск ближайших банков по фильтрации")
+
+    @Operation(summary = "Получить BankDtoPageableResponse по BankFilterDtoRequest", tags = "Bank",
+            description = "Поиск ближайших банков по фильтрации")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success")
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {@Content(mediaType = "application/json", schema =
+                    @Schema(implementation = BankDtoPageableResponse.class))})
     })
+    @PostMapping("/filter")
     public BankDtoPageableResponse filterBanks(@RequestBody BankFilterDtoRequest filterDto) {
         return bankService.filter(filterDto);
     }
 
-    @PostMapping("/filter-2")
-    @Operation(summary = "Получить BankDtoPageableDto по BankFilterDtoRequest", description = "Поиск ближайших банков по фильтрации")
+    @Operation(summary = "Получить BankDtoPageableResponse по BankFilterDtoRequest", tags = "Bank",
+            description = "Поиск ближайших банков с фильтрацией по ramp и department")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success")
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {@Content(mediaType = "application/json", schema =
+                    @Schema(implementation = BankDtoPageableResponse.class))})
     })
+    @PostMapping("/filter-2")
     public BankDtoPageableResponse filterBanks2(@RequestBody BankFilterDtoRequest filterDto) {
         return bankService.filter2(filterDto);
     }
@@ -107,5 +130,4 @@ public class BankController {
     public void delete() {
         bankService.deleteAll();
     }
-
 }
