@@ -32,7 +32,10 @@ public class Atm {
     @Column(name = "allDay")
     private Boolean allDay;
 
-    //delete
+    @OneToOne
+    @JoinColumn(name = "service_id", referencedColumnName = "id")
+    private AtmInnerServices service;
+
     public Atm(AtmDtoResponse atm, AtmInnerServices service) {
         this.address = atm.getAddress();
         this.latitude = atm.getLatitude();
@@ -40,10 +43,6 @@ public class Atm {
         this.allDay = atm.getAllDay();
         this.service = service;
     }
-
-    @OneToOne
-    @JoinColumn(name = "service_id", referencedColumnName = "id")
-    private AtmInnerServices service;
 
     @Override
     public boolean equals(Object o) {

@@ -27,5 +27,5 @@ public class AtmFilterDtoRequest {
     private Integer size;
     @JsonProperty("services")
     @NotNull
-    private AtmInnerServicesDtoResponse services;
+    private AtmInnerServicesDtoRequest services;
 }
