@@ -30,6 +30,8 @@ public class BankDtoRequest {
 
     private boolean status;
     private boolean rko;
+    @JsonProperty("has_ramp")
+    private boolean hasRamp;
 
     @JsonProperty("sale_point_format")
     private String salePointFormat;

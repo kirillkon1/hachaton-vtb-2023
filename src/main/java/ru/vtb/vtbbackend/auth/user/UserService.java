@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.vtb.vtbbackend.exceptions.UserNotFoundException;
 import ru.vtb.vtbbackend.web.dto.request.RegisterRequest;
 import ru.vtb.vtbbackend.web.dto.response.UserDtoResponse;
-import ru.vtb.vtbbackend.web.mapper.UserDto;
 import ru.vtb.vtbbackend.web.mapper.UserMapper;
 
 import java.util.Optional;

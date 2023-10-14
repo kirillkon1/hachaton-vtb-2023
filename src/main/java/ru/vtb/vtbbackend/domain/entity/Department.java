@@ -19,7 +19,7 @@ public class Department {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "office_id")
     private ServiceOfBank serviceOfBank;
 

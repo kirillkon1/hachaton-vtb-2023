@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.webjars.NotFoundException;
 import ru.vtb.vtbbackend.exceptions.BankNotFoundException;
+import ru.vtb.vtbbackend.exceptions.CustomNotFoundException;
 
 @RestControllerAdvice
 public class ErrorHandler {
@@ -15,8 +15,8 @@ public class ErrorHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
+    @ExceptionHandler(CustomNotFoundException.class)
+    public ResponseEntity<String> handleNotFoundException(CustomNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
