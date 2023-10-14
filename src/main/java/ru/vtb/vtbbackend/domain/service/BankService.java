@@ -59,6 +59,7 @@ public class BankService {
     public BankDtoPageable filter(BankFilterDtoRequest filterDto) {
         Pageable pageable = PageRequest.of(filterDto.getPage(), filterDto.getSize());
 
+
         var banks = bankRepository.findNearestBanks(filterDto.getUserX(), filterDto.getUserY(), pageable);
         var bankDtos = banks.stream().map(BankDtoResponse::new).toList();
 
