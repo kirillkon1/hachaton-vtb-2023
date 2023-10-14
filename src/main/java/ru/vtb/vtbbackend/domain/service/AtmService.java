@@ -11,6 +11,7 @@ import ru.vtb.vtbbackend.domain.repository.AtmInnerServicesRepository;
 import ru.vtb.vtbbackend.domain.repository.AtmRepository;
 import ru.vtb.vtbbackend.web.dto.request.AtmDtoRequest;
 import ru.vtb.vtbbackend.web.dto.request.AtmFilterDtoRequest;
+import ru.vtb.vtbbackend.web.dto.request.AtmInnerServicesDtoRequest;
 import ru.vtb.vtbbackend.web.dto.response.AtmDtoPageableDto;
 import ru.vtb.vtbbackend.web.dto.response.AtmDtoResponse;
 import ru.vtb.vtbbackend.web.dto.response.AtmInnerServicesDtoResponse;
@@ -69,18 +70,18 @@ public class AtmService {
                 .build();
     }
 
-    public List<Atm> filter(List<Atm> list, AtmInnerServicesDtoResponse response){
+    public List<Atm> filter(List<Atm> list, AtmInnerServicesDtoRequest response){
         List<Atm> atms = new ArrayList<>(list);
         for (int i = 0; i < atms.size(); i++) {
             AtmInnerServices services = list.get(i).getService();
-            if(response.getBlind().equals("AVAILABLE") && !services.getBlind().equals("AVAILABLE") ||
-                    response.getWheelchair().equals("AVAILABLE") && !services.getWheelchair().equals("AVAILABLE")||
-                    response.getQrRead().equals("AVAILABLE") && !services.getQrRead().equals("AVAILABLE")||
-                    response.getNfcForBankCards().equals("AVAILABLE") && !services.getNfcForBankCards().equals("AVAILABLE")||
-                    response.getSupportsChargeRub().equals("AVAILABLE") && !services.getSupportsChargeRub().equals("AVAILABLE")||
-                    response.getSupportsUsd().equals("AVAILABLE") && !services.getSupportsUsd().equals("AVAILABLE")||
-                    response.getSupportsEur().equals("AVAILABLE") && !services.getSupportsEur().equals("AVAILABLE")||
-                    response.getSupportsRub().equals("AVAILABLE") && !services.getSupportsRub().equals("AVAILABLE")){
+            if(response.getBlind() && !services.getBlind().equals("AVAILABLE") ||
+                    response.getWheelchair() && !services.getWheelchair().equals("AVAILABLE")||
+                    response.getQrRead() && !services.getQrRead().equals("AVAILABLE")||
+                    response.getNfcForBankCards() && !services.getNfcForBankCards().equals("AVAILABLE")||
+                    response.getSupportsChargeRub() && !services.getSupportsChargeRub().equals("AVAILABLE")||
+                    response.getSupportsUsd() && !services.getSupportsUsd().equals("AVAILABLE")||
+                    response.getSupportsEur() && !services.getSupportsEur().equals("AVAILABLE")||
+                    response.getSupportsRub() && !services.getSupportsRub().equals("AVAILABLE")){
                 atms.remove(i);
                 i--;
             }
