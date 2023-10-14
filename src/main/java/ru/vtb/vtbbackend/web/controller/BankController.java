@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.vtb.vtbbackend.exceptions.BankNotFoundException;
 import ru.vtb.vtbbackend.web.errorHandler.ErrorResponse;
@@ -74,6 +73,15 @@ public class BankController {
     })
     public BankDtoPageable filterBanks(@RequestBody BankFilterDtoRequest filterDto) {
         return bankService.filter(filterDto);
+    }
+
+    @PostMapping("/filter-2")
+    @Operation(summary = "Получить BankDtoPageableDto по BankFilterDtoRequest", description = "Поиск ближайших банков по фильтрации")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success")
+    })
+    public BankDtoPageable filterBanks2(@RequestBody BankFilterDtoRequest filterDto) {
+        return bankService.filter2(filterDto);
     }
 
     @Hidden

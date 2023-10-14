@@ -2,6 +2,7 @@ package ru.vtb.vtbbackend.domain.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -68,6 +69,30 @@ public class BankService {
         var banks = bankRepository.findNearestBanks(filterDto.getUserX(), filterDto.getUserY(), pageable);
         var bankDtos = banks.stream().map(BankDtoResponse::new).toList();
 
+        return BankDtoPageable.builder()
+                .banks(bankDtos)
+                .page(Long.valueOf(filterDto.getPage()))
+                .pageSize(Long.valueOf(filterDto.getSize()))
+                .total(banks.getTotalElements())
+                .totalPages((long) banks.getTotalPages())
+                .build();
+
+
+    }
+
+    public BankDtoPageable filter2(BankFilterDtoRequest filterDto) {
+        Pageable pageable = PageRequest.of(filterDto.getPage(), filterDto.getSize());
+
+        Page<Bank> banks;
+        if(filterDto.isHasRamp()){
+            banks = bankRepository.findNearestBanksFiltered(filterDto.getUserX(), filterDto.getUserY(),
+                    filterDto.getDepartments(), pageable);
+        }else{
+            banks = bankRepository.findNearestBanksFilteredWithoutRamp(filterDto.getUserX(), filterDto.getUserY(),
+                    filterDto.getDepartments(), pageable);
+        }
+
+        var bankDtos = banks.stream().map(BankDtoResponse::new).toList();
         return BankDtoPageable.builder()
                 .banks(bankDtos)
                 .page(Long.valueOf(filterDto.getPage()))
@@ -147,6 +172,5 @@ public class BankService {
     public void deleteAll() {
         bankRepository.deleteAll();
     }
-
 
 }
