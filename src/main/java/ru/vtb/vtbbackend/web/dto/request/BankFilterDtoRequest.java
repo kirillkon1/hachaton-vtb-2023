@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class BankFilterDtoRequest {
 
@@ -18,7 +20,11 @@ public class BankFilterDtoRequest {
     @Schema(name = "user_y", example = "20")
     private Double userY;
 
-//    private List<Department> departments;
+    @JsonProperty("departments")
+    private List<String> departments;
+
+    @JsonProperty("has_ramp")
+    private boolean hasRamp;
 
     @NotNull
     @Schema(name = "page", example = "0", description = "Номер страницы")
@@ -27,7 +33,4 @@ public class BankFilterDtoRequest {
     @NotNull
     @Schema(name = "size", example = "10", description = "Размер страницы")
     private Integer size;
-
-
-
 }
