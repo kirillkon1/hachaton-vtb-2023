@@ -113,17 +113,17 @@ public class BankController {
         return bankService.filter(filterDto);
     }
 
-    @Operation(summary = "Получить BankDtoPageableResponse по BankFilterDtoRequest", tags = "Bank",
-            description = "Поиск ближайших банков с фильтрацией по ramp и department")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = {@Content(mediaType = "application/json", schema =
-                    @Schema(implementation = BankDtoPageableResponse.class))})
-    })
-    @PostMapping("/filter-2")
-    public BankDtoPageableResponse filterBanks2(@RequestBody BankFilterDtoRequest filterDto) {
-        return bankService.filter2(filterDto);
-    }
+//    @Operation(summary = "Получить BankDtoPageableResponse по BankFilterDtoRequest", tags = "Bank",
+//            description = "Поиск ближайших банков с фильтрацией по ramp и department")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Success",
+//                    content = {@Content(mediaType = "application/json", schema =
+//                    @Schema(implementation = BankDtoPageableResponse.class))})
+//    })
+//    @PostMapping("/filter-2")
+//    public BankDtoPageableResponse filterBanks2(@RequestBody BankFilterDtoRequest filterDto) {
+//        return bankService.filter2(filterDto);
+//    }
 
     @Hidden
     @DeleteMapping()
